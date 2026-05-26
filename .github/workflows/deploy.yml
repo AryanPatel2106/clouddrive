@@ -3,28 +3,33 @@ name: CloudDrive CI/CD Pipeline
 on:
   push:
     branches:
-      - main
+      - main # Triggers the workflow whenever you push to the main branch
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
+    # 1. Pull down a copy of your source code onto the GitHub runner machine
     - name: Checkout Source Code
       uses: actions/checkout@v4
 
+    # 2. Authenticate with AWS using the keys we stored in GitHub Secrets
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v4
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ap-south-1
+        aws-region: ap-south-1  # Change this to your bucket's region if different
 
-    # Added pull-updates.sh to the pack list so your servers can pull code automatically later!
+    # 3. Compress the application code into a single archive file (.tar.gz)
+    # We purposefully leave out 'node_modules' to keep the bundle small and fast.
     - name: Pack Application Code
       run: |
         tar -czf clouddrive-latest.tar.gz server.js package.json package-lock.json deploy.sh
 
+    # 4. Upload the packed zip file directly into your S3 bucket
+    # The '--acl private' flag ensures it stays locked down.
     - name: Upload Artifact to AWS S3
       run: |
-        aws s3 cp clouddrive-latest.tar.gz s3://clouddrive-deploy-bucket-2026/clouddrive-latest.tar.gz
+        aws s3 cp clouddrive-latest.tar.gz s3://clouddrive-deploy-bucket-2026/clouddrive-latest.tar.gz --acl private
