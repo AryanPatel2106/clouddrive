@@ -10,10 +10,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Source Code
-      uses: actions/checkout@v4
-      with:
-        persist-credentials: false
+    # Bypassing actions/checkout@v4 to avoid the GitHub Git RPC 403 / packfile error
+    name: Download Source Code via API Zip
+      run: |
+        curl -L -o repo.zip "https://github.com/AryanPatel2106/clouddrive/archive/refs/heads/main.zip"
+        unzip repo.zip
+        mv clouddrive-main/* ./
+        rm -rf clouddrive-main repo.zip
 
     - name: Pack Application Code
       run: |
