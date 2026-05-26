@@ -10,8 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    # Bypassing actions/checkout@v4 to avoid the GitHub Git RPC 403 / packfile error
-    name: Download Source Code via API Zip
+    - name: Download Source Code via API Zip
       run: |
         curl -L -o repo.zip "https://github.com/AryanPatel2106/clouddrive/archive/refs/heads/main.zip"
         unzip repo.zip
