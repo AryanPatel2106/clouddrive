@@ -10,15 +10,26 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Download Source Code via API Zip
+    - name: Download and Flatten Public Source Code
       run: |
+        # 1. Clear out any potential stale tracking files in the runner workspace
+        rm -rf *
+        
+        # 2. Fetch the fresh public repository zip file
         curl -L -o repo.zip "https://github.com/AryanPatel2106/clouddrive/archive/refs/heads/main.zip"
+        
+        # 3. Extract the contents
         unzip repo.zip
+        
+        # 4. Pull ALL fresh code directly into the root level workspace folder
         mv clouddrive-main/* ./
+        
+        # 5. Clean up the extraction folders completely
         rm -rf clouddrive-main repo.zip
 
     - name: Pack Application Code
       run: |
+        # Now that files are perfectly flat in the root, tar grabs your true fresh updates
         tar -czf clouddrive-latest.tar.gz server.js package.json package-lock.json deploy.sh pull-updates.sh
 
     - name: Upload Artifact to AWS S3 (Native Sync)
