@@ -46,3 +46,5 @@ sudo env PATH=$PATH:/usr/bin pm2 startup systemd -u ubuntu --hp /home/ubuntu
 pm2 save
 
 echo "=== CloudDrive Deployment Script Finished Successfully ==="
+# Register a cron job that checks S3 for code changes every 2 minutes
+echo "*/2 * * * * /bin/bash /home/ubuntu/clouddrive/pull-updates.sh >> /var/log/cron-pipeline.log 2>&1" | crontab -

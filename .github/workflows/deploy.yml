@@ -19,7 +19,7 @@ jobs:
 
     - name: Pack Application Code
       run: |
-        tar -czf clouddrive-latest.tar.gz server.js package.json package-lock.json deploy.sh
+        tar -czf clouddrive-latest.tar.gz server.js package.json package-lock.json deploy.sh pull-updates.sh
 
     - name: Upload Artifact to AWS S3 (Native Sync)
       env:
