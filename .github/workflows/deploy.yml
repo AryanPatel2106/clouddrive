@@ -26,7 +26,7 @@ jobs:
     # We purposefully leave out 'node_modules' to keep the bundle small and fast.
     - name: Pack Application Code
       run: |
-        tar -czf clouddrive-latest.tar.gz server.js package.json package-lock.json
+        tar -czf clouddrive-latest.tar.gz server.js package.json package-lock.json deploy.sh
 
     # 4. Upload the packed zip file directly into your S3 bucket
     # The '--acl private' flag ensures it stays locked down.
