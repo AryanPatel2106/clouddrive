@@ -3,7 +3,7 @@ name: CloudDrive CI/CD Pipeline
 on:
   push:
     branches:
-      - main # Triggers the workflow whenever you push to the main branch
+    - main
 
 jobs:
   deploy:
