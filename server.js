@@ -8,7 +8,7 @@ app.get('/', (req, res) => {
         <html>
             <head><title>CloudDrive MVP</title></head>
             <body style="font-family: Arial, sans-serif; text-align: center; margin-top: 50px;">
-                <h1>☁️ Welcome to CloudDrive MVP ............!</h1>
+                <h1>☁️ Welcome to CloudDrive MVP ............hello!</h1>
                 <p>Infrastructure, CI/CD, and Auto Scaling are working flawlessly.</p>
             </body>
         </html>
