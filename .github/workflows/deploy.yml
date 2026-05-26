@@ -13,17 +13,14 @@ jobs:
     - name: Checkout Source Code
       uses: actions/checkout@v4
 
-    - name: Configure AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v4.0.3
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ap-south-1
-
     - name: Pack Application Code
       run: |
         tar -czf clouddrive-latest.tar.gz server.js package.json package-lock.json deploy.sh
 
-    - name: Upload Artifact to AWS S3
+    - name: Upload Artifact to AWS S3 (Native Sync)
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_DEFAULT_REGION: ap-south-1
       run: |
         aws s3 cp clouddrive-latest.tar.gz s3://clouddrive-deploy-bucket-2026/clouddrive-latest.tar.gz
