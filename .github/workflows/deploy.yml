@@ -8,13 +8,12 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    # This block fixes the 403 error by giving the runner explicit read access
-    permissions:
-      contents: read
 
     steps:
     - name: Checkout Source Code
       uses: actions/checkout@v4
+      with:
+        persist-credentials: false
 
     - name: Pack Application Code
       run: |
